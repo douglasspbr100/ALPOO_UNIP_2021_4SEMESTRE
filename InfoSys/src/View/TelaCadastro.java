@@ -8,6 +8,7 @@ package View;
 import Model.Cliente;
 import Model.Produto;
 import Model.Tecnico;
+import Util.Mascara;
 
 /**
  *
@@ -21,7 +22,9 @@ public class TelaCadastro extends javax.swing.JFrame {
   
     public TelaCadastro() {
         initComponents();
+        setMask();
         tfCliNome.requestFocus();
+        
     }
 
     /**
@@ -70,8 +73,8 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void gravaTecnico(){
         String nome = tfTecNome.getText();
         double salario = Double.parseDouble(tfTecSalario.getText());
-        double valordahora = Double.parseDouble(tfTecValordaHora.getText());
-        System.out.println(new Tecnico(nome, salario, valordahora));
+        double valor = Double.parseDouble(tfTecValor.getText());
+        System.out.println(new Tecnico(nome, salario, valor));
         limpaTecnico();
         
     }
@@ -79,7 +82,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void limpaTecnico(){
         tfTecNome.setText("");
         tfTecSalario.setText("");
-        tfTecValordaHora.setText("");
+        tfTecValor.setText("");
         tfTecNome.requestFocus();
         
     }    
@@ -99,13 +102,13 @@ public class TelaCadastro extends javax.swing.JFrame {
         lbCliNome = new javax.swing.JLabel();
         tfCliNome = new javax.swing.JTextField();
         lbCliCPF = new javax.swing.JLabel();
-        tfCliCPF = new javax.swing.JTextField();
         lbCliFone = new javax.swing.JLabel();
-        tfCliFone = new javax.swing.JTextField();
         lbCliCelular = new javax.swing.JLabel();
-        tfCliCelular = new javax.swing.JTextField();
         lbCliEmail = new javax.swing.JLabel();
         tfCliEmail = new javax.swing.JTextField();
+        tfCliCPF = new javax.swing.JFormattedTextField();
+        tfCliFone = new javax.swing.JFormattedTextField();
+        tfCliCelular = new javax.swing.JFormattedTextField();
         pnProduto = new javax.swing.JPanel();
         lbProDescricao = new javax.swing.JLabel();
         tfProDescricao = new javax.swing.JTextField();
@@ -114,17 +117,17 @@ public class TelaCadastro extends javax.swing.JFrame {
         cbAtivo = new javax.swing.JCheckBox();
         pnProPreco = new javax.swing.JPanel();
         lbProCusto = new javax.swing.JLabel();
-        tfProCusto = new javax.swing.JTextField();
         lbProValor = new javax.swing.JLabel();
-        tfProValor = new javax.swing.JTextField();
+        tfProCusto = new javax.swing.JFormattedTextField();
+        tfProValor = new javax.swing.JFormattedTextField();
         pnServico = new javax.swing.JPanel();
         pnTecnico = new javax.swing.JPanel();
         lbTecNome = new javax.swing.JLabel();
         lbTecSalario = new javax.swing.JLabel();
         lbTecValordaHora = new javax.swing.JLabel();
         tfTecNome = new javax.swing.JTextField();
-        tfTecSalario = new javax.swing.JTextField();
-        tfTecValordaHora = new javax.swing.JTextField();
+        tfTecSalario = new javax.swing.JFormattedTextField();
+        tfTecValor = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -187,6 +190,12 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         lbCliEmail.setText("Email:");
 
+        tfCliCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCliCPFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnClienteLayout = new javax.swing.GroupLayout(pnCliente);
         pnCliente.setLayout(pnClienteLayout);
         pnClienteLayout.setHorizontalGroup(
@@ -200,8 +209,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                             .addComponent(lbCliCPF))
                         .addGap(33, 33, 33)
                         .addGroup(pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfCliCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                            .addComponent(tfCliNome)))
+                            .addComponent(tfCliNome, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                            .addComponent(tfCliCPF)))
                     .addGroup(pnClienteLayout.createSequentialGroup()
                         .addGroup(pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbCliFone)
@@ -210,9 +219,9 @@ public class TelaCadastro extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCliEmail)
-                            .addComponent(tfCliCelular)
-                            .addComponent(tfCliFone))))
-                .addContainerGap(133, Short.MAX_VALUE))
+                            .addComponent(tfCliFone)
+                            .addComponent(tfCliCelular))))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
         pnClienteLayout.setVerticalGroup(
             pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +246,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addGroup(pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCliEmail)
                     .addComponent(tfCliEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         tbTela.addTab("Cliente", pnCliente);
@@ -264,12 +273,6 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         lbProCusto.setText("Custo:");
 
-        tfProCusto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfProCustoActionPerformed(evt);
-            }
-        });
-
         lbProValor.setText("Venda:");
 
         javax.swing.GroupLayout pnProPrecoLayout = new javax.swing.GroupLayout(pnProPreco);
@@ -279,22 +282,25 @@ public class TelaCadastro extends javax.swing.JFrame {
             .addGroup(pnProPrecoLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(lbProCusto)
-                .addGap(18, 18, 18)
-                .addComponent(tfProCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfProCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbProValor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfProValor, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(tfProValor, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
+
+        pnProPrecoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {tfProCusto, tfProValor});
+
         pnProPrecoLayout.setVerticalGroup(
             pnProPrecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnProPrecoLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(pnProPrecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbProCusto)
-                    .addComponent(tfProCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbProValor)
+                    .addComponent(tfProCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfProValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -317,11 +323,10 @@ public class TelaCadastro extends javax.swing.JFrame {
                         .addGap(84, 84, 84))
                     .addGroup(pnProdutoLayout.createSequentialGroup()
                         .addComponent(tfProDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))))
+                        .addContainerGap(20, Short.MAX_VALUE))))
             .addGroup(pnProdutoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnProPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(pnProPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnProdutoLayout.setVerticalGroup(
             pnProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,12 +366,6 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         lbTecValordaHora.setText("Valor da Hora: ");
 
-        tfTecSalario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTecSalarioActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnTecnicoLayout = new javax.swing.GroupLayout(pnTecnico);
         pnTecnico.setLayout(pnTecnicoLayout);
         pnTecnicoLayout.setHorizontalGroup(
@@ -380,12 +379,12 @@ public class TelaCadastro extends javax.swing.JFrame {
                             .addComponent(lbTecNome))
                         .addGap(18, 18, 18)
                         .addGroup(pnTecnicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfTecSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTecNome, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfTecNome, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfTecSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnTecnicoLayout.createSequentialGroup()
                         .addComponent(lbTecValordaHora)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfTecValordaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfTecValor, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         pnTecnicoLayout.setVerticalGroup(
@@ -402,8 +401,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(pnTecnicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTecValordaHora)
-                    .addComponent(tfTecValordaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(tfTecValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         tbTela.addTab("Técnicos", pnTecnico);
@@ -429,6 +428,16 @@ public class TelaCadastro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setMask(){
+        tfCliCPF.setFormatterFactory(Mascara.getCpfMask());
+        tfCliFone.setFormatterFactory(Mascara.getFoneFixoMask());
+        tfCliCelular.setFormatterFactory(Mascara.getCelularMask());
+        tfProCusto.setFormatterFactory(Mascara.getValorMask());
+        tfProValor.setFormatterFactory(Mascara.getValorMask());
+        tfTecSalario.setFormatterFactory(Mascara.getValorMask());
+        tfTecValor.setFormatterFactory(Mascara.getValorMask());
+    }
+    
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         if (tbTela.getSelectedComponent() == pnCliente) limpaCliente();
         else if (tbTela.getSelectedComponent() == pnProduto) limpaProduto();
@@ -447,19 +456,15 @@ public class TelaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfProDescricaoActionPerformed
 
-    private void tfProCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfProCustoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfProCustoActionPerformed
-
     private void spProEstoqueStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spProEstoqueStateChanged
         int v = (int) spProEstoque.getValue();
         if (v < 0) spProEstoque.setValue(0);
         // TODO add your handling code here:
     }//GEN-LAST:event_spProEstoqueStateChanged
 
-    private void tfTecSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTecSalarioActionPerformed
+    private void tfCliCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCliCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfTecSalarioActionPerformed
+    }//GEN-LAST:event_tfCliCPFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -523,16 +528,16 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JPanel pnTitulo;
     private javax.swing.JSpinner spProEstoque;
     private javax.swing.JTabbedPane tbTela;
-    private javax.swing.JTextField tfCliCPF;
-    private javax.swing.JTextField tfCliCelular;
+    private javax.swing.JFormattedTextField tfCliCPF;
+    private javax.swing.JFormattedTextField tfCliCelular;
     private javax.swing.JTextField tfCliEmail;
-    private javax.swing.JTextField tfCliFone;
+    private javax.swing.JFormattedTextField tfCliFone;
     private javax.swing.JTextField tfCliNome;
-    private javax.swing.JTextField tfProCusto;
+    private javax.swing.JFormattedTextField tfProCusto;
     private javax.swing.JTextField tfProDescricao;
-    private javax.swing.JTextField tfProValor;
+    private javax.swing.JFormattedTextField tfProValor;
     private javax.swing.JTextField tfTecNome;
-    private javax.swing.JTextField tfTecSalario;
-    private javax.swing.JTextField tfTecValordaHora;
+    private javax.swing.JFormattedTextField tfTecSalario;
+    private javax.swing.JFormattedTextField tfTecValor;
     // End of variables declaration//GEN-END:variables
 }

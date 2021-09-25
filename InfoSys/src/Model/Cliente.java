@@ -7,6 +7,7 @@ public class Cliente {
     private String fone = null;
     private String celular = null;
     private String email = null;
+    
 
     public String getNome() {
         return nome;

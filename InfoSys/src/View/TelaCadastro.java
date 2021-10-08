@@ -8,6 +8,7 @@ package View;
 import Model.Cliente;
 import Model.Produto;
 import Model.Tecnico;
+import Util.Converte;
 import Util.Mascara;
 
 /**
@@ -55,8 +56,8 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void gravaProduto(){
         String descricao = tfProDescricao.getText();
         int estoque = (int) spProEstoque.getValue();
-        double custo = Double.parseDouble(tfProCusto.getText());
-        double valor = Double.parseDouble(tfProValor.getText());
+        double custo = Converte.textToValue(tfProCusto.getText());
+        double valor = Converte.textToValue(tfProValor.getText());
         System.out.println(new Produto(descricao, estoque, custo, valor));
         limpaProduto();
     }
@@ -65,8 +66,8 @@ public class TelaCadastro extends javax.swing.JFrame {
         tfProDescricao.setText("");
         spProEstoque.setValue(0);
         cbAtivo.setSelected(true);
-        tfProCusto.setText("");
-        tfProValor.setText("");
+        tfProCusto.setText("0,00");
+        tfProValor.setText("0,00");
         tfProDescricao.requestFocus();
     }
     

@@ -1,7 +1,10 @@
 package Model;
 
+import dao.ProdutoDAO;
+
 public class Produto {
     
+    private int codigo = 0;
     private String descricao = null;
     private int estoque;
     private boolean ativo = false;
@@ -48,6 +51,14 @@ public class Produto {
         this.custo = custo;
     }
     
+      public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
     public Produto(String descricao, int estoque, double valor, double custo){
         setDescricao(descricao);
         setEstoque(estoque);
@@ -68,7 +79,12 @@ public class Produto {
                      "] - [Preco de Venda: " + getValor() + "]";
          return ret;
     }
-    
+
+    private void gravar(){
+        ProdutoDAO dao = new ProdutoDAO();
+        int codigo = dao.create(this);
+        if (codigo > 0) setCodigo(codigo);
+    }
     
     
 }

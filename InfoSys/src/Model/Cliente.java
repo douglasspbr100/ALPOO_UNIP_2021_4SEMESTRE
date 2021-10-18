@@ -1,7 +1,10 @@
 package Model;
 
+import dao.ClienteDAO;
+
 public class Cliente {
     
+    private int codigo = 0;
     private String nome = null;
     private String cpf = null;
     private String fone = null;
@@ -49,6 +52,15 @@ public class Cliente {
         this.email = email;
     }
 
+       public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    
     public Cliente(String nome, String cpf, String fone, String celular, String email) {
     
         setNome(nome);
@@ -56,6 +68,7 @@ public class Cliente {
         setFone(fone);
         setCelular(celular);
         setEmail(email);
+        gravar();
     }    
 
     @Override
@@ -68,7 +81,13 @@ public class Cliente {
               "Email...: [" + getEmail() + "]\n";
         return ret;
     }
-    
+
+ 
+    private void gravar(){
+        ClienteDAO dao = new ClienteDAO();
+        int codigo = dao.create(this);
+        if (codigo > 0) setCodigo(codigo);
+    }
     
 
     

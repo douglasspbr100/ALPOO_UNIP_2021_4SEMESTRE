@@ -10,8 +10,8 @@ import javax.swing.text.NumberFormatter;
 
 public class Mascara extends Cliente{
 
-    public Mascara(String nome, String cpf, String fone, String celular, String email) {
-        super(nome, cpf, fone, celular, email);
+    public Mascara(int codigo,String nome, String cpf, String fone, String celular, String email) {
+        super(codigo,nome, cpf, fone, celular, email);
     }
     
     public static DefaultFormatterFactory getCpfMask(){

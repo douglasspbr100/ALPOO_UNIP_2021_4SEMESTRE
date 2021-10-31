@@ -1,6 +1,8 @@
 package Model;
 
 import dao.ClienteDAO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class Cliente {
     
@@ -10,6 +12,14 @@ public class Cliente {
     private String fone = null;
     private String celular = null;
     private String email = null;
+
+    public Cliente() {
+    }
+
+    
+    public Cliente(String nome, String cpf, String fone, String celular, String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
     public String getNome() {
@@ -61,13 +71,13 @@ public class Cliente {
     }
     
     
-    public Cliente(String nome, String cpf, String fone, String celular, String email) {
-    
-        setNome(nome);
-        setCpf(cpf);
-        setFone(fone);
-        setCelular(celular);
-        setEmail(email);
+    public Cliente(int codigo,String nome, String cpf, String fone, String celular, String email) {
+        this.setCodigo(codigo);
+        this.setNome(nome);
+        this.setCpf(cpf);
+        this.setFone(fone);
+        this.setCelular(celular);
+        this.setEmail(email);
         gravar();
     }    
 
@@ -89,6 +99,17 @@ public class Cliente {
         if (codigo > 0) setCodigo(codigo);
     }
     
-
-    
-}
+    public static DefaultTableModel getTableModel(){
+        List<Cliente> lista = ClienteDAO.getInstance().read();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nome");
+        modelo.addColumn("Telefone");
+        modelo.addColumn("Celular");
+        modelo.addColumn("Email");
+        for (Cliente c: lista){
+            String[] reg = {c.getNome(),c.getFone(),c.getCelular(),c.getEmail()};
+            modelo.addRow(reg);
+        }
+        return modelo;  
+    }
+    }

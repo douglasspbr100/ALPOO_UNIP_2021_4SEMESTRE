@@ -60,11 +60,12 @@ public class Produto {
     }
     
     public Produto(String descricao, int estoque, double valor, double custo){
-        setDescricao(descricao);
-        setEstoque(estoque);
-        setValor(valor);
-        setCusto(custo);
-        setAtivo(true);
+        this.setDescricao(descricao);
+        this.setEstoque(estoque);
+        this.setValor(valor);
+        this.setCusto(custo);
+        this.setAtivo(true);
+        gravar();
         
     }
 

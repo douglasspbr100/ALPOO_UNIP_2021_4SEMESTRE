@@ -42,9 +42,10 @@ public class Tecnico {
     }
 
     public Tecnico(String nome, double salario, double valordahora) {
-        setNome(nome);
-        setSalario(salario);
-        setValordahora(valordahora);
+        this.setNome(nome);
+        this.setSalario(salario);
+        this.setValordahora(valordahora);
+        gravar();
         
     }
 

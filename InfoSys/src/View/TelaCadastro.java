@@ -55,6 +55,31 @@ public class TelaCadastro extends javax.swing.JFrame {
         limpaCliente();
     }
     
+    private void consultaCliente(){
+        Cliente cliente = new Cliente();
+        cliente = dao.ClienteDAO.getInstance().findByCodigo(Integer.parseInt(tfCod.getText()));
+        tfCliNome.setText(cliente.getNome());
+        tfCliCPF.setText(cliente.getCpf());
+        tfCliFone.setText(cliente.getFone());
+        tfCliCelular.setText(cliente.getCelular());
+        tfCliEmail.setText(cliente.getEmail());
+    }
+    
+    private void excluirCliente(){
+        dao.ClienteDAO.getInstance().delete(Integer.parseInt(tfCod.getText()));
+    }
+    
+    public void alterarCliente(){
+        int codigo = Integer.parseInt(tfCod.getText());
+        String nome = tfCliNome.getText();
+        String cpf = tfCliCPF.getText();
+        String fone = tfCliFone.getText();
+        String celular = tfCliCelular.getText();
+        String email = tfCliEmail.getText();
+        Cliente cliente = new Cliente(codigo,nome,cpf,fone,celular,email);
+        dao.ClienteDAO.getInstance().update(cliente);
+    }
+    
     private void gravaProduto(){
         String descricao = tfProDescricao.getText();
         int estoque = (int) spProEstoque.getValue();
@@ -100,6 +125,10 @@ public class TelaCadastro extends javax.swing.JFrame {
         pnButtons = new javax.swing.JPanel();
         btGravar = new javax.swing.JButton();
         btLimpar = new javax.swing.JButton();
+        btConsultar = new javax.swing.JButton();
+        tfCod = new javax.swing.JTextField();
+        btExcluir = new javax.swing.JButton();
+        btAlterar = new javax.swing.JButton();
         tbTela = new javax.swing.JTabbedPane();
         pnCliente = new javax.swing.JPanel();
         lbCliNome = new javax.swing.JLabel();
@@ -162,16 +191,45 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
+            }
+        });
+
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
+        btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnButtonsLayout = new javax.swing.GroupLayout(pnButtons);
         pnButtons.setLayout(pnButtonsLayout);
         pnButtonsLayout.setHorizontalGroup(
             pnButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnButtonsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnButtonsLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addComponent(btGravar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btLimpar)
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAlterar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btConsultar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCod, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnButtonsLayout.setVerticalGroup(
             pnButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +237,11 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(pnButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btGravar)
-                    .addComponent(btLimpar))
+                    .addComponent(btLimpar)
+                    .addComponent(btConsultar)
+                    .addComponent(tfCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btExcluir)
+                    .addComponent(btAlterar))
                 .addContainerGap())
         );
 
@@ -224,7 +286,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                             .addComponent(tfCliEmail)
                             .addComponent(tfCliFone)
                             .addComponent(tfCliCelular))))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         pnClienteLayout.setVerticalGroup(
             pnClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +388,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                         .addGap(84, 84, 84))
                     .addGroup(pnProdutoLayout.createSequentialGroup()
                         .addComponent(tfProDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                        .addContainerGap(69, Short.MAX_VALUE))))
             .addGroup(pnProdutoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnProPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -354,7 +416,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         pnServico.setLayout(pnServicoLayout);
         pnServicoLayout.setHorizontalGroup(
             pnServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 472, Short.MAX_VALUE)
         );
         pnServicoLayout.setVerticalGroup(
             pnServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +450,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                         .addComponent(lbTecValordaHora)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfTecValor, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         pnTecnicoLayout.setVerticalGroup(
             pnTecnicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,7 +478,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tbTela)
+            .addComponent(tbTela, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,6 +531,21 @@ public class TelaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCliCPFActionPerformed
 
+    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        if(tbTela.getSelectedComponent() == pnCliente) consultaCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btConsultarActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        if(tbTela.getSelectedComponent() == pnCliente) excluirCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        if(tbTela.getSelectedComponent() == pnCliente) alterarCliente();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btAlterarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -505,6 +582,9 @@ public class TelaCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAlterar;
+    private javax.swing.JButton btConsultar;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btGravar;
     private javax.swing.JButton btLimpar;
     private javax.swing.JCheckBox cbAtivo;
@@ -536,6 +616,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField tfCliEmail;
     private javax.swing.JFormattedTextField tfCliFone;
     private javax.swing.JTextField tfCliNome;
+    private javax.swing.JTextField tfCod;
     private javax.swing.JFormattedTextField tfProCusto;
     private javax.swing.JTextField tfProDescricao;
     private javax.swing.JFormattedTextField tfProValor;

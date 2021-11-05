@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.Cliente;
+
 /**
  *
  * @author dougl
@@ -14,8 +16,14 @@ public class TelaConsulta extends javax.swing.JFrame {
     /**
      * Creates new form TelaConsulta
      */
+    
+    private void montaTabelaCliente(){
+        tbConsulta.setModel(Cliente.getTableModel());
+    }
+    
     public TelaConsulta() {
         initComponents();
+        montaTabelaCliente();
     }
 
     /**
@@ -33,7 +41,7 @@ public class TelaConsulta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbConsulta = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnTitulo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

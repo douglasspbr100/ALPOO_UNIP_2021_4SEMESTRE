@@ -11,6 +11,15 @@ public class Produto {
     private double valor = 0;
     private double custo = 0;
 
+    public Produto() {
+    }
+
+    
+    
+    public Produto(String descricao, int estoque, double custo, double valor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -59,16 +68,18 @@ public class Produto {
         this.codigo = codigo;
     }
     
-    public Produto(String descricao, int estoque, double valor, double custo){
+    public Produto(int codigo, String descricao, boolean ativo, int estoque, double valor, double custo){
+        this.setCodigo(codigo);
         this.setDescricao(descricao);
         this.setEstoque(estoque);
         this.setValor(valor);
         this.setCusto(custo);
-        this.setAtivo(true);
+        this.setAtivo(ativo);
         gravar();
         
     }
 
+    
     @Override
     public String toString() {
          String ret = null;

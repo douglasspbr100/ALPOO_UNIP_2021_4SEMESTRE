@@ -49,7 +49,31 @@ public class ProdutoDAO implements dao.Persistencia<Produto>{
 
     @Override
     public Produto findByCodigo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Connection con = ConnectionFactory.getConnection();
+       PreparedStatement pst = null;
+       ResultSet rs = null;
+       Produto p = null;
+       String sql = "SELECT * FROM Clientes Where Codigo = ?";
+       try{
+           pst = con.prepareStatement(sql);
+           pst.setInt(1,id);
+           rs = pst.executeQuery();
+           while (rs.next()) {
+               int codigo = rs.getInt("Codigo");
+               String nome = rs.getString("Nome");
+               boolean ativo = rs.getBoolean("Ativo");
+               int estoque = rs.getInt("Estoque");
+               double custo = rs.getDouble("Custo");
+               double valor = rs.getDouble("Valor");
+               p = new Produto(codigo,nome,ativo,estoque,custo,valor);
+       }
+       } catch (SQLException ex){
+           throw new RuntimeException("Erro no SELECT.");
+       } finally {
+           ConnectionFactory.closeConnection(con, pst, rs);
+       }
+       
+       return p;
     }
 
     @Override
